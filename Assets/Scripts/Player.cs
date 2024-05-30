@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private float moveSpeed = 2f; // 이동 속도
-    private float jumpForce = 3f; // 점프 힘
-
-    private bool isJumping = false;
-    private bool isGrounded = false;
+    public float moveSpeed = 2f; // 이동 속도
+    public float jumpForce = 3f; // 점프 힘
 
     // 마지막으로 보고 있는 방향을 기억하는 변수
     private bool isFacingRight = true;
+    private bool isGround = true;
 
     private Rigidbody2D rb;
     public AudioSource mySfx;
     public AudioClip jumpSound;
     public Animator playerAnimator;
+
+    public Transform groundCheck; // 캐릭터 발 아래에 위치한 점
 
     void Start()
     {
@@ -24,9 +24,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Move();
-        Jump();
+        CheckGround();
+        if (Input.GetKey(KeyCode.Space)) {
+            Jump();
+        }
     }
-
+        
     void Move()
     {
         float moveInput = Input.GetAxisRaw("Horizontal");
@@ -54,32 +57,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void CheckGround() {
+        if (rb.velocity.y == 0) {
+            isGround = true;
+            playerAnimator.SetBool("isJump", false);
+        } else {
+            isGround = false;
+        }
+    }
+
     void Jump()
     {
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if (isGround)
         {
-            isJumping = true;
-            isGrounded = false;
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
             JumpSound();
-            playerAnimator.SetBool("isJump", true);
-            print("점프!" + isJumping);
+            playerAnimator.SetBool("isJump", true); 
+            print(playerAnimator.GetBool("isJump"));
         }
     }
 
     public void JumpSound()
     {
         mySfx.PlayOneShot(jumpSound);
-    }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Step") || other.gameObject.CompareTag("Ground"))
-        {
-            isJumping = false;
-            isGrounded = true;
-            playerAnimator.SetBool("isJump", false);
-            print("착지!" + isJumping);
-        }
     }
 }
