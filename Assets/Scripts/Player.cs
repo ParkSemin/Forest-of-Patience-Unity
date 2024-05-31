@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip jumpSound;
     public Animator playerAnimator;
 
+    public LayerMask playerLayer, groundLayer;
+
     public Transform groundCheck; // 캐릭터 발 아래에 위치한 점
 
     void Start()
@@ -23,10 +25,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Move();
-        CheckGround();
-        if (Input.GetKey(KeyCode.Space)) {
-            Jump();
+        if (GameManager.instance.isGameover == false) {
+            Move();
+            CheckGround();
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                Jump();
+            }
         }
     }
         
@@ -72,13 +76,19 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
             JumpSound();
-            playerAnimator.SetBool("isJump", true); 
-            print(playerAnimator.GetBool("isJump"));
+            playerAnimator.SetBool("isJump", true);
         }
     }
 
-    public void JumpSound()
+    void JumpSound()
     {
         mySfx.PlayOneShot(jumpSound);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("Finish")) {
+            GameManager.instance.OnPlayerDead();
+            print("GameOver!!");
+        }
     }
 }
