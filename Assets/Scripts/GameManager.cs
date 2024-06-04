@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     public bool isGameover = false;
     public TextMeshProUGUI timeText, bestTimeText;
-    public GameObject gameoverUI;
+    public GameObject gameoverUI, pauseUI;
     public AudioSource music; // 배경음악
     private float sec;
     private int min;
@@ -68,11 +68,14 @@ public class GameManager : MonoBehaviour
             } 
         } else {
             Timer();
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                OnPause();
+            }
         }
     }
 
-    // 플레이어 캐릭터가 사망시 게임 오버를 실행하는 메서드
-    public void OnPlayerDead() {
+    // 골인지점 도착 시 게임 오버를 실행하는 메서드
+    public void OnPlayerFinish() {
         isGameover = true;
         gameoverUI.SetActive(true);
         
@@ -100,13 +103,27 @@ public class GameManager : MonoBehaviour
         TimerText.text = string.Format("{0:D2}:{1:D2}", min, (int)sec);
     }
 
+    // ESC 키를 눌러 계속하기, 다시시작, 메인화면 팝업창 보이는 메서드
+    public void OnPause() {
+        isGameover = true;
+        pauseUI.SetActive(true);
+    }
+
+    // 계속하기 메서드
+    public void OnClickContinue() {
+        isGameover = false;
+        pauseUI.SetActive(false);
+    }
+
     // 다시 시작 메서드
     public void OnClickRestart() {
+        pauseUI.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // 메인 화면 이동 메서드
     public void OnClickMain() {
+        pauseUI.SetActive(false);
         SceneManager.LoadScene("Title");
     }
 }

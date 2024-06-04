@@ -9,7 +9,7 @@ public class Title : MonoBehaviour
     public GameObject okUI;
 
     public void OnClickSinglePlay() {
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("Map_1");
     }
 
     public void OnClickMultiPlay() {
