@@ -6,14 +6,15 @@ using UnityEngine.SceneManagement;
 public class Title : MonoBehaviour
 {
     public GameObject settingUI;
+    public GameObject multiplayLobbyUI;
     public GameObject okUI;
 
     public void OnClickSinglePlay() {
-        SceneManager.LoadScene("Map_1");
+        SceneManager.LoadScene("Map_1_single");
     }
 
     public void OnClickMultiPlay() {
-
+        multiplayLobbyUI.SetActive(true);
     }
 
     public void OnClickSetting() {
@@ -31,6 +32,9 @@ public class Title : MonoBehaviour
     }
 
     public void OnClickReturn() {
-        settingUI.SetActive(false);
+        if (settingUI.activeSelf)
+            settingUI.SetActive(false);
+        else if (multiplayLobbyUI.activeSelf)
+            multiplayLobbyUI.SetActive(false);
     }
 }
