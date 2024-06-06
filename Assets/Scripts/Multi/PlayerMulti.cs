@@ -1,4 +1,6 @@
 using Photon.Pun;
+using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 
 public class PlayerMulti : MonoBehaviourPun
@@ -14,9 +16,14 @@ public class PlayerMulti : MonoBehaviourPun
     public AudioSource mySfx;
     public AudioClip jumpSound;
     public Animator playerAnimator;
+    public TextMeshProUGUI mNicknameLabel;
 
     void Start()
     {
+        foreach(PlayerMulti player in GameObject.FindObjectsOfType<PlayerMulti>()) {
+            player.ApplyPlayerName(player.photonView.Owner.NickName);
+        }
+
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -24,16 +31,22 @@ public class PlayerMulti : MonoBehaviourPun
     {
         if (!photonView.IsMine)
         {
+            mNicknameLabel.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f);
             return;
         }
         
         if (!GameManagerMulti.instance.isGameover && !GameManagerMulti.instance.isPause) {
-            Move();
+            Move(); 
             CheckGround();
             if (Input.GetKeyDown(KeyCode.Space)) {
                 Jump();
             }
+            mNicknameLabel.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f);
         }
+    }
+
+    private void ApplyPlayerName(string name) {
+        mNicknameLabel.text = name;
     }
         
     void Move()

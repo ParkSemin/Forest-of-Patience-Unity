@@ -643,7 +643,7 @@ MonoBehaviour:
   bestTimeText: {fileID: 2124963798}
   gameoverUI: {fileID: 1345835557}
   pauseUI: {fileID: 20314371}
-  playerPrefab: {fileID: 419682693201973750, guid: fd676d3efcfd1034b8f6f4eed88e38ba, type: 3}
+  playerPrefab: {fileID: 8379087543429600801, guid: a9e9ed8b2b523eb4397103a32e4ead6e, type: 3}
   music: {fileID: 96417439}
   TimerText: {fileID: 1656102773}
 --- !u!4 &96417438

@@ -7,7 +7,7 @@ public class Title : MonoBehaviour
 {
     public GameObject settingUI;
     public GameObject multiplayLobbyUI;
-    public GameObject okUI;
+    public GameObject okUI, inputNicknameUI;
 
     public void OnClickSinglePlay() {
         SceneManager.LoadScene("Map_1_single");
@@ -29,6 +29,10 @@ public class Title : MonoBehaviour
 
     public void OnClickOk() {
         okUI.SetActive(false);
+    }
+
+    public void OnClickDone() {
+        inputNicknameUI.SetActive(false);
     }
 
     public void OnClickReturn() {

@@ -11,6 +11,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private string gmaeVersion = "1.0";
     public TextMeshProUGUI connectionStateTxt;
     public Button joinBtn;
+    public TMP_InputField mNickNameField;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     // 룸 접속 시도
     public void OnConnect() {
+        PhotonNetwork.NickName = mNickNameField.text;
+
         joinBtn.interactable = false; // 중복 접속 시도를 막기 위해 접속 버튼 잠시 비활성화
 
         if (PhotonNetwork.IsConnected) // 마스터 서버에 접속 중이라면
