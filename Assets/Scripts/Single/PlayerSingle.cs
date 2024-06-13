@@ -22,7 +22,7 @@ public class PlayerSingle : MonoBehaviourPun
 
     void Update()
     {        
-        if (GameManagerSingle.instance.isGameover == false) {
+        if (!GameManagerSingle.instance.isGameover && !GameManagerSingle.instance.isPause) {
             Move();
             CheckGround();
             if (Input.GetKeyDown(KeyCode.Space)) {
