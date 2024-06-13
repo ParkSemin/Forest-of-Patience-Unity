@@ -11,6 +11,7 @@ public class PlayerMulti : MonoBehaviourPun
     // 마지막으로 보고 있는 방향을 기억하는 변수
     private bool isFacingRight = true;
     private bool isGround = true;
+    private string myName;
 
     private Rigidbody2D rb;
     public AudioSource mySfx;
@@ -23,7 +24,7 @@ public class PlayerMulti : MonoBehaviourPun
         foreach(PlayerMulti player in GameObject.FindObjectsOfType<PlayerMulti>()) {
             player.ApplyPlayerName(player.photonView.Owner.NickName);
         }
-
+        
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -47,6 +48,10 @@ public class PlayerMulti : MonoBehaviourPun
 
     private void ApplyPlayerName(string name) {
         mNicknameLabel.text = name;
+
+        if (photonView.IsMine) {
+            myName = name;
+        }
     }
         
     void Move()
@@ -101,9 +106,13 @@ public class PlayerMulti : MonoBehaviourPun
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("Finish")) {
-            GameManagerMulti.instance.OnPlayerFinish();
-            print("GameOver!!");
+        if (other.CompareTag("Finish") && myName == mNicknameLabel.text) {
+            photonView.RPC("EndGame", RpcTarget.All, myName);
         }
+    }
+
+    [PunRPC]
+    void EndGame(string name) {
+        GameManagerMulti.instance.OnPlayerFinish(name);
     }
 }

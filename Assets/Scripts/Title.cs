@@ -2,15 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Title : MonoBehaviour
 {
-    public GameObject settingUI;
+    private string selectedSingleMapName;
+    public GameObject settingUI, mapSelectUI;
+    public Button singleStartButton;
     public GameObject multiplayLobbyUI;
     public GameObject okUI, inputNicknameUI;
 
     public void OnClickSinglePlay() {
-        SceneManager.LoadScene("Map_1_single");
+        mapSelectUI.SetActive(true);
+    }
+
+    // 맵 선택 메서드
+    public void OnClickMap(GameObject button) {
+        singleStartButton.interactable = true;
+        selectedSingleMapName = button.name;
+    }
+
+    public void OnClickStartSingle() {
+        SceneManager.LoadScene(selectedSingleMapName);
     }
 
     public void OnClickMultiPlay() {
@@ -23,8 +36,7 @@ public class Title : MonoBehaviour
 
     public void OnClickReset() {
         okUI.SetActive(true);
-        PlayerPrefs.SetInt("BestMin", 0);
-        PlayerPrefs.SetInt("BestSec", 0);
+        PlayerPrefs.DeleteAll();
     }
 
     public void OnClickOk() {
@@ -40,5 +52,9 @@ public class Title : MonoBehaviour
             settingUI.SetActive(false);
         else if (multiplayLobbyUI.activeSelf)
             multiplayLobbyUI.SetActive(false);
+    }
+
+    public void OnClickQuit() {
+        Application.Quit();
     }
 }
