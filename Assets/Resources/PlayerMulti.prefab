@@ -84,7 +84,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_Sprite: {fileID: -6367560908665664636, guid: cd947491a13509945aa1b644f9db3ef2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -160,8 +160,10 @@ MonoBehaviour:
   jumpForce: 2.5
   mySfx: {fileID: 6806462429140077265}
   jumpSound: {fileID: 8300000, guid: 37a96c23e713c6d4c8e4bd9db1746f3e, type: 3}
+  gruntSound: {fileID: 8300000, guid: bc4b4a5408f2945318e5221cc7a38779, type: 3}
   playerAnimator: {fileID: 4772300869776696393}
   mNicknameLabel: {fileID: 0}
+  spriteRenderer: {fileID: 3552607710212793181}
 --- !u!82 &6806462429140077265
 AudioSource:
   m_ObjectHideFlags: 0

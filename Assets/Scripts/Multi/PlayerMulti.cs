@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMulti : MonoBehaviourPun
@@ -15,9 +16,10 @@ public class PlayerMulti : MonoBehaviourPun
 
     private Rigidbody2D rb;
     public AudioSource mySfx;
-    public AudioClip jumpSound;
+    public AudioClip jumpSound, gruntSound;
     public Animator playerAnimator;
     public TextMeshProUGUI mNicknameLabel;
+    public SpriteRenderer spriteRenderer;
 
     void Start()
     {
@@ -26,6 +28,7 @@ public class PlayerMulti : MonoBehaviourPun
         }
         
         rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
     }
 
     void Update()
@@ -37,6 +40,7 @@ public class PlayerMulti : MonoBehaviourPun
         }
         
         if (!GameManagerMulti.instance.isGameover && !GameManagerMulti.instance.isPause) {
+            rb.gravityScale = 1;
             Move(); 
             CheckGround();
             if (Input.GetKeyDown(KeyCode.Space)) {
@@ -114,5 +118,43 @@ public class PlayerMulti : MonoBehaviourPun
     [PunRPC]
     void EndGame(string name) {
         GameManagerMulti.instance.OnPlayerFinish(name);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("Obstacle")) {
+            
+            if (photonView.IsMine) {
+                // 충돌 사실을 마스터 클라이언트에게 알림
+                photonView.RPC("NotifyMasterClient", RpcTarget.MasterClient, photonView.ViewID);
+                StartCoroutine(ChangeColorCoroutine());
+                mySfx.PlayOneShot(gruntSound);
+                int dirX = transform.position.x - collision.transform.position.x > 0 ? 1 : -1;
+                rb.AddForce(new Vector2(dirX, 1) * (jumpForce/1.5f), ForceMode2D.Impulse);
+            }
+        }
+    }
+
+    [PunRPC]
+    void NotifyMasterClient(int viewID)
+    {
+        // 모든 클라이언트에게 이 캐릭터가 장애물에 맞았음을 알림
+        photonView.RPC("OnHitByObstacle", RpcTarget.All, viewID);
+    }
+
+    [PunRPC]
+    void OnHitByObstacle(int viewID)
+    {
+        if (photonView.ViewID == viewID)
+        {
+            // 캐릭터 색상을 빨간색으로 변경하고 일정 시간 후 다시 흰색으로 변경
+            StartCoroutine(ChangeColorCoroutine());
+        }
+    }
+
+    IEnumerator ChangeColorCoroutine()
+    {
+        spriteRenderer.color = new Color32(255, 100, 100, 255);
+        yield return new WaitForSeconds(0.3f);
+        spriteRenderer.color = Color.white;
     }
 }

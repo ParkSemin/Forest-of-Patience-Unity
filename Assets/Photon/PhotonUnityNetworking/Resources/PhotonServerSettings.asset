@@ -43,6 +43,11 @@ MonoBehaviour:
   - GameStarte
   - OnPlayerFinish
   - EndGame
+  - Init
+  - PlayerLoadedMap
+  - OnGameStart
+  - NotifyMasterClient
+  - OnHitByObstacle
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
