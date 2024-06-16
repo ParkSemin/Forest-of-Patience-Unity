@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
-public class SwingObstacle : MonoBehaviourPun
+public class SwingObstacleMulti : MonoBehaviourPun
 {
-    // public static SwingObstacle instance;
     public float amplitude = 30f; // 최대 각도
     public float frequency = 2f; // 주기
     private double startTime;
