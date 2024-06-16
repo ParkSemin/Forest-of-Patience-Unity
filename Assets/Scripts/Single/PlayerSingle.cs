@@ -1,3 +1,4 @@
+using System.Collections;
 using Photon.Pun;
 using UnityEngine;
 
@@ -12,8 +13,9 @@ public class PlayerSingle : MonoBehaviourPun
 
     private Rigidbody2D rb;
     public AudioSource mySfx;
-    public AudioClip jumpSound;
+    public AudioClip jumpSound, gruntSound;
     public Animator playerAnimator;
+    public SpriteRenderer spriteRenderer;
 
     void Start()
     {
@@ -88,5 +90,21 @@ public class PlayerSingle : MonoBehaviourPun
             GameManagerSingle.instance.OnPlayerFinish();
             print("GameOver!!");
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("Obstacle")) {
+            Debug.Log("장애물 충돌");
+            StartCoroutine(Blink());
+            mySfx.PlayOneShot(gruntSound);
+            int dirX = transform.position.x - collision.transform.position.x > 0 ? 1 : -1;
+            rb.AddForce(new Vector2(dirX, 1) * (jumpForce/1.5f), ForceMode2D.Impulse);
+        }
+    }
+
+    IEnumerator Blink() {
+        spriteRenderer.color = new Color32(255, 100, 100, 255);
+        yield return new WaitForSeconds(0.3f);
+        spriteRenderer.color = Color.white;
     }
 }

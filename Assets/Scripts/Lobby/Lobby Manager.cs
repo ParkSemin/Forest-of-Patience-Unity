@@ -13,7 +13,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient) {
             menuUI.SetActive(true);
         }
-       
     }
 
     // 게임 시작 메서드
@@ -21,7 +20,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (selectedMapName != null) {
             photonView.RPC("GameStart", RpcTarget.All, selectedMapName);   
         } else {
-            infoUI.SetActive(true);
+            infoUI.SetActive(true); 
         }
     }
 
@@ -37,7 +36,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     // 맵 선택 메서드
     public void OnClickMap(GameObject button) {
-        print(button.name);
         selectedMapName = button.name;
     }
 
