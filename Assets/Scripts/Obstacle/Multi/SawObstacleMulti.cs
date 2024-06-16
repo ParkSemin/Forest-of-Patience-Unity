@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
-public class SawObstacle : MonoBehaviourPun
+public class SawObstacleMulti : MonoBehaviourPun
 {
     float lowerY = 0f; // 장애물이 내려갈 y값
     float upperY = 0.24f; // 장애물이 올라갈 y값
@@ -46,8 +46,6 @@ public class SawObstacle : MonoBehaviourPun
                     Mathf.Lerp(startY, endY, elapsedTime / duration),
                     transform.localPosition.z
                 );
-
-                Debug.Log(elapsedTime);
                 yield return null;
             }
             collider2D.enabled = endY == upperY;

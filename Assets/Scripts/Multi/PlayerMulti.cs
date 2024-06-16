@@ -9,8 +9,6 @@ public class PlayerMulti : MonoBehaviourPun
     public float moveSpeed = 1.3f; // 이동 속도
     public float jumpForce = 2.5f; // 점프 힘
 
-    // 마지막으로 보고 있는 방향을 기억하는 변수
-    private bool isFacingRight = true;
     private bool isGround = true;
     private string myName;
 
@@ -41,7 +39,7 @@ public class PlayerMulti : MonoBehaviourPun
         
         if (!GameManagerMulti.instance.isGameover && !GameManagerMulti.instance.isPause) {
             rb.gravityScale = 1;
-            Move(); 
+            Move();
             CheckGround();
             if (Input.GetKeyDown(KeyCode.Space)) {
                 Jump();
@@ -68,13 +66,11 @@ public class PlayerMulti : MonoBehaviourPun
         if (moveInput < 0) // 왼쪽으로 이동
         {
             transform.rotation = Quaternion.Euler(0, 180, 0); // 180도 회전하여 왼쪽을 보게 함
-            isFacingRight = false;
             playerAnimator.SetBool("isMove", true);
         }
         else if (moveInput > 0) // 오른쪽으로 이동
         {
             transform.rotation = Quaternion.Euler(0, 0, 0); // 원래 방향 (오른쪽)
-            isFacingRight = true;
             playerAnimator.SetBool("isMove", true);
         }
         else

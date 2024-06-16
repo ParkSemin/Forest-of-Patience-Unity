@@ -50,9 +50,9 @@ public class GameManagerMulti : MonoBehaviourPunCallbacks
         // 해당 게임 오브젝트의 주도권은 생성 메서드를 직접 실행한 클라이언트에 있음
         PhotonNetwork.Instantiate(playerPrefab.name, spawnPos, Quaternion.identity);
         
-        // 마스터 클라이언트는 3초 뒤 게임을 시작시킴
+        // 마스터 클라이언트는 3(2.9)초 뒤 게임을 시작시킴
         if (PhotonNetwork.IsMasterClient) {
-            Invoke(nameof(SetUp), 3f);
+            Invoke(nameof(SetUp), 2.9f);
         }
     }
 
@@ -83,7 +83,6 @@ public class GameManagerMulti : MonoBehaviourPunCallbacks
 
     // 골인지점 도착 시 게임 오버를 실행하는 메서드
     public void OnPlayerFinish(string name) {
-        print("게임 종료됨 >> " + name);
         isGameover = true;
         txtWinnerNickName.text = name;
         gameoverUI.SetActive(true); 

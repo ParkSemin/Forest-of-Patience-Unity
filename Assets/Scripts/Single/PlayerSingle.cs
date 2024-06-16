@@ -88,13 +88,11 @@ public class PlayerSingle : MonoBehaviourPun
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Finish")) {
             GameManagerSingle.instance.OnPlayerFinish();
-            print("GameOver!!");
         }
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Obstacle")) {
-            Debug.Log("장애물 충돌");
             StartCoroutine(Blink());
             mySfx.PlayOneShot(gruntSound);
             int dirX = transform.position.x - collision.transform.position.x > 0 ? 1 : -1;
