@@ -25754,7 +25754,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC2B9\uB9AC!"
+  m_text: Winner
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dfaba9a109237c645bc787dae69927b4, type: 2}
   m_sharedMaterial: {fileID: 1922137873801746162, guid: dfaba9a109237c645bc787dae69927b4, type: 2}
