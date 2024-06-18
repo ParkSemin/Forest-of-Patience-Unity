@@ -701,7 +701,7 @@ MonoBehaviour:
   waitingUI: {fileID: 1435879398}
   playerPrefab: {fileID: 8379087543429600801, guid: a9e9ed8b2b523eb4397103a32e4ead6e, type: 3}
   music: {fileID: 96417439}
-  txtWinnerNickName: {fileID: 0}
+  txtWinnerNickName: {fileID: 456638663}
   TimerText: {fileID: 1122214124}
 --- !u!4 &96417438
 Transform:
