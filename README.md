@@ -1,4 +1,4 @@
-|# Forest of Patience - 인내의 숲
+# Forest of Patience - 인내의 숲
 **2024 게임공학 캡스톤디자인** 에서 진행한 1인 게임 개발 프로젝트입니다.  
 
 ## 📝 프로젝트 소개
